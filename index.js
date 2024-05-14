@@ -2,15 +2,22 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import path from 'path';
+import { fileURLToPath } from 'url'
+import favicon from 'serve-favicon'
 
 import App from './models/App.js'
 
-dotenv.config()
+dotenv.config({ path: '.env.local' })
 mongoose.set("strictQuery", false);
 const app = express()
 const port = 5000
 app.use(express.json())
 app.use(cors());
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+
 
 const connect = async () => {
   try {
@@ -53,7 +60,7 @@ app.delete('/:id', async (req, res) => {
   try {
     await App.findByIdAndDelete(req.params.id)
 
-    req.status(200).json("App has been deleted.")
+    res.status(200).json("App has been deleted.")
   } catch (error) {
     res.status(500).json(error.message)
   }
