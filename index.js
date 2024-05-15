@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 })
 
 // Create app
-app.post('/', async (req, res) => {
+app.post('/api', async (req, res) => {
   try {
     const newApp = new App(req.body)
 
@@ -45,7 +45,7 @@ app.post('/', async (req, res) => {
 })
 
 // Update app
-app.put('/:id', async (req, res) => {
+app.put('/api/:id', async (req, res) => {
   try {
     const updatedApp = await App.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
 
@@ -56,7 +56,7 @@ app.put('/:id', async (req, res) => {
 })
 
 // Delete app
-app.delete('/:id', async (req, res) => {
+app.delete('/api/:id', async (req, res) => {
   try {
     await App.findByIdAndDelete(req.params.id)
 
@@ -67,7 +67,7 @@ app.delete('/:id', async (req, res) => {
 })
 
 // Get app
-app.get('/:id', async (req, res) => {
+app.get('/api/:id', async (req, res) => {
   try {
     const app = await App.findById(req.params.id)
 
@@ -78,7 +78,7 @@ app.get('/:id', async (req, res) => {
 })
 
 // Get apps
-app.get('/', async (req, res) => {
+app.get('/api', async (req, res) => {
   try {
     const { name = "", limit = 25 } = req.query
 
